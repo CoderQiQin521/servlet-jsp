@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -56,32 +57,45 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>412721112172971921</td>
-                <td>张三</td>
-                <td>2022-03-12 15:26:12</td>
-                <td>出</td>
-                <td>外来人员</td>
-                <td>成功</td>
-                <td>123123</td>
-                <td>
-                    <button class="btn btn-default">修改</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>412721112172971921</td>
-                <td>张三</td>
-                <td>2022-03-12 15:26:12</td>
-                <td>出</td>
-                <td>居民</td>
-                <td>成功</td>
-                <td>123123</td>
-                <td>
-                    <button class="btn btn-default">修改</button>
-                </td>
-            </tr>
+<%--            <%--%>
+<%--                for (int x = 1; x <= 3; x++){--%>
+<%--            %>--%>
+<%--            <div >--%>
+<%--                第 <%=x%> 行--%>
+<%--            </div>--%>
+<%--            <%--%>
+<%--                }--%>
+<%--            %>--%>
+
+<%--            <c:forEach items="${sessionScope.userList}" var="user">--%>
+<%--                <tr>--%>
+<%--                    <td>1</td>--%>
+
+<%--                    <td>${user.name}</td>--%>
+<%--                    <td>2022-03-12 15:26:12</td>--%>
+<%--                    <td>出</td>--%>
+<%--                    <td>外来人员</td>--%>
+<%--                    <td>成功</td>--%>
+<%--                    <td>123123</td>--%>
+<%--                    <td>--%>
+<%--                        <button class="btn btn-default">修改</button>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </c:forEach>--%>
+
+<%--            <tr>--%>
+<%--                <td>2</td>--%>
+<%--                <td>412721112172971921</td>--%>
+<%--                <td>张三</td>--%>
+<%--                <td>2022-03-12 15:26:12</td>--%>
+<%--                <td>出</td>--%>
+<%--                <td>居民</td>--%>
+<%--                <td>成功</td>--%>
+<%--                <td>123123</td>--%>
+<%--                <td>--%>
+<%--                    <button class="btn btn-default">修改</button>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
             </tbody>
         </table>
     </div>
