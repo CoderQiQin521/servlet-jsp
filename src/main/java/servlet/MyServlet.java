@@ -9,10 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @WebServlet(name = "MyServlet", value = "/",  loadOnStartup = 1)
 public class MyServlet extends HttpServlet {
+    
+//    public static String test(String createTime) throws ParseException {
+//
+//        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date date = (Date) fmt.parse(createTime);//将数据库出的 timestamp 类型的时间转换为java的Date类型
+//        String s = fmt.format(date);
+//        return s;
+//    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<RecordUser> recordList = null;
@@ -55,13 +66,17 @@ public class MyServlet extends HttpServlet {
                 userList.add(user);
             }
     
-            if(!recordList.isEmpty()){
-                request.getSession().setAttribute("recordList",recordList);
-                request.getSession().setAttribute("userList",userList);
-                response.sendRedirect("list.jsp");
-            }else{
-                response.sendRedirect("error.jsp");
-            }
+            request.getSession().setAttribute("recordList",recordList);
+            request.getSession().setAttribute("userList",userList);
+            request.getRequestDispatcher("list.jsp").forward(request, response);
+            
+//            if(!recordList.isEmpty()){
+//                request.getSession().setAttribute("recordList",recordList);
+//                request.getSession().setAttribute("userList",userList);
+//                response.sendRedirect("list.jsp");
+//            }else{
+//                response.sendRedirect("error.jsp");
+//            }
             
             DBUtil.close(conn, ps, null);
         } catch (SQLException e) {

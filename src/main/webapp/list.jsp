@@ -11,27 +11,27 @@
 <body>
 <div class="container">
     <h2 class="text-center">出入信息列表</h2>
-    <form class="form-inline">
+    <form class="form-inline" method="get" action="${pageContext.request.contextPath }/">
         <div class="form-group">
             <label for="idcard">身份证号</label>
-            <input type="text" class="form-control" id="idcard" placeholder="">
+            <input type="text" name="idcard" class="form-control" id="idcard" placeholder="">
         </div>
 
         <div class="form-group">
             <label for="type">人员类型</label>
-            <select id="type" class="form-control">
-                <option>全部</option>
-                <option>外来人员</option>
-                <option>居民</option>
+            <select name="type" id="type" class="form-control">
+                <option value="-1">全部</option>
+                <option value="0">外来人员</option>
+                <option value="1">居民</option>
             </select>
         </div>
         <div class="form-group">
             <label for="cr">出入</label>
 
-            <select id="cr" class="form-control">
-                <option>全部</option>
-                <option>出</option>
-                <option>入</option>
+            <select id="cr" name="method" class="form-control">
+                <option value="-1">全部</option>
+                <option value="0">出</option>
+                <option value="1">入</option>
             </select>
         </div>
         <button type="submit" class="btn btn-default">查询</button>
@@ -110,22 +110,22 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="_name">姓名</label>
-                        <input type="text" class="form-control" id="_name" name="name" maxlength="20"
+                        <input required type="text" class="form-control" id="_name" name="name" maxlength="20"
                                placeholder="请输入姓名">
                     </div>
                     <div class="form-group">
                         <label for="_idcard">身份证号</label>
-                        <input type="text" class="form-control" id="_idcard" name="idcard" maxlength="20"
+                        <input required type="text" class="form-control" id="_idcard" name="idcard" maxlength="20"
                                placeholder="请输入身份证号">
                     </div>
                     <div class="form-group">
                         <label for="_phone">手机号</label>
-                        <input type="text" class="form-control" id="_phone" name="phone" maxlength="11"
+                        <input required type="text" class="form-control" id="_phone" name="phone" maxlength="11"
                                placeholder="请输入手机号">
                     </div>
                     <div class="form-group">
                         <label for="_type">人员类型</label>
-                        <select id="_type" name="type" class="form-control">
+                        <select required id="_type" name="type" class="form-control">
                             <option value="0">居民</option>
                             <option value="1">外来人员</option>
                         </select>
@@ -152,7 +152,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="_uid">人员</label>
-                        <select id="_uid" name="uid" class="form-control">
+                        <select required id="_uid" name="uid" class="form-control">
                             <c:forEach items="${sessionScope.userList}" var="user">
                                 <option value="${user.id}">${user.name}</option>
                             </c:forEach>
@@ -162,7 +162,7 @@
                         <label for="_method">出/入</label>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="method" id="_method" value="0"> 出
+                                <input type="radio" name="method" id="_method" checked value="0"> 出
                             </label>
                         </div>
                         <div class="radio">
@@ -175,7 +175,7 @@
                         <label for="_method">是否通过</label>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="result" id="inlineRadio1" value="1"> 是
+                                <input type="radio" name="result" id="inlineRadio1" checked value="1"> 是
                             </label>
                         </div>
                         <div class="radio">
