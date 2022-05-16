@@ -12,6 +12,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,17 +39,32 @@ public class RecordServlet extends HttpServlet {
                 params.put(entry.getKey(), entry.getValue()[0]);
             }
         }
+
+        String id = (String) params.get("id");
     
         boolean isTrue = false;
         try {
             Connection conn = DBUtil.getConn();
+            PreparedStatement ps = null;
+            String sql = "";
             // 准备一个sql语句
-            String sql = "INSERT INTO record (uid,method,result) VALUES(?,?,?)";
+            if (id == null) {
+                sql = "INSERT INTO record (uid,method,result,created_at) VALUES(?,?,?,?)";
+
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, (String) params.get("uid"));
+                ps.setString(2, (String) params.get("method"));
+                ps.setString(3, (String) params.get("result"));
+                ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+            }else {
+                sql = "UPDATE record SET uid=?,method=?,result=? where id="+id;
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, (String) params.get("uid"));
+                ps.setString(2, (String) params.get("method"));
+                ps.setString(3, (String) params.get("result"));
+            }
             // 用PreparedStatement交互数据库
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, (String) params.get("uid"));
-            ps.setString(2, (String) params.get("method"));
-            ps.setString(3, (String) params.get("result"));
+
             // 用count显示影响的行数
             int count = ps.executeUpdate();
             // 展示页面
@@ -69,12 +86,14 @@ public class RecordServlet extends HttpServlet {
         out.println("  <body>");
         if (isTrue) {
             out.println("<h3>添加成功</h3>");
+            out.println("<a href='./'>返回首页</a>");
 //            out.println("<p>你添加的姓名为：" + params.get("name") + "</p>");
 //            out.println("<p>你添加的身份证号为：" + params.get("idcard") + "</p>");
 //            out.println("<p>你添加的手机号为：" + params.get("phone") + "</p>");
 //            out.println("<p>你添加人员类型为：" + params.get("type") + "</p>");
         } else {
             out.println("<h1>添加失败！！！</h1>");
+            out.println("<a href='./'>返回首页</a>");
         }
         out.println("  </body>");
         out.println("</html>");

@@ -11,7 +11,7 @@ public class DBUtil {
         Connection conn = null;
         String dburl  = "jdbc:mysql://127.0.0.1:3306/servlet_table?useSSL=false&serverTimezone=UTC";
         String username ="root";
-        String password = "root";
+        String password = "Qiqin5150317";
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -30,14 +30,31 @@ public class MyServlet extends HttpServlet {
         recordList = new ArrayList<RecordUser>();
         ArrayList<User> userList = null;
         userList = new ArrayList<User>();
-    
+
+        String idcard = request.getParameter("idcard");
+        String type = request.getParameter("type");
+        String method = request.getParameter("method");
+
         try {
             Connection conn = DBUtil.getConn();
             // 准备一个sql语句
-            String sql = "select r.*,u.id as uid,u.name,u.idcard,u.phone,u.type from record r left join user u on u" +
+            String sub = "select * from user where 1=1";
+            if (idcard != null && !idcard.equals("")) {
+                sub += " and idcard like '%"+idcard+"%'";
+            }
+            if (type != null && !type.equals("-1")) {
+                sub += " and type="+type;
+            }
+
+            String sql = "select r.*,u.id as uid,u.name,u.idcard,u.phone,u.type from record as r right join ("+sub+") u on u" +
                                  ".id=r.uid";
+            if (method != null && !method.equals("-1")) {
+                sql += (" where r.method="+method);
+            }
             String sql2 = "select * from user";
             // 用PreparedStatement交互数据库
+
+            sql += " order by id asc";
             PreparedStatement ps = conn.prepareStatement(sql);
             PreparedStatement ps2 = conn.prepareStatement(sql2);
     
@@ -46,6 +63,7 @@ public class MyServlet extends HttpServlet {
             while (result.next()) {
                 RecordUser record = new RecordUser();
                 record.setId(result.getInt("id"));
+                record.setUid(result.getInt("uid"));
                 record.setIdcard(result.getString("idcard"));
                 record.setName(result.getString("name"));
                 record.setPhone(result.getString("phone"));

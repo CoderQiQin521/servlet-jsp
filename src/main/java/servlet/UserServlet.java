@@ -75,8 +75,10 @@ public class UserServlet extends HttpServlet {
             out.println("<p>你添加的身份证号为：" + params.get("idcard") + "</p>");
             out.println("<p>你添加的手机号为：" + params.get("phone") + "</p>");
             out.println("<p>你添加人员类型为：" + params.get("type") + "</p>");
+            out.println("<a href='./'>返回首页</a>");
         } else {
             out.println("<h1>添加失败！！！</h1>");
+            out.println("<a href='./'>返回首页</a>");
         }
         out.println("  </body>");
         out.println("</html>");

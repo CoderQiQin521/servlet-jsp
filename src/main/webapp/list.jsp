@@ -89,7 +89,7 @@
                     </td>
                     <td>${record.phone}</td>
                     <td>
-                        <button class="btn btn-default">修改</button>
+                        <button class="btn btn-default" data-toggle="modal" data-target="#updateRecord" data-id="${record.id}" onclick="selectRecord(${record.id},${record.uid},${record.method},${record.result})">修改</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -194,7 +194,99 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="updateRecord" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">修改出入信息</h4>
+            </div>
+            <form method="post" action="record">
+                <input id="update_id" type="hidden" name="id" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="u_uid">人员</label>
+                        <select required name="uid" id="u_uid" class="form-control">
+                            <c:forEach items="${sessionScope.userList}" var="user">
+                                <option value="${user.id}">${user.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="_method">出/入</label>
+                        <div class="radio">
+                            <label>
+                                <input id="method1" type="radio" name="method" checked value="0"> 出
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input id="method2" type="radio" name="method" value="1"> 入
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="_method">是否通过</label>
+                        <div class="radio">
+                            <label>
+                                <input id="res1" type="radio" name="result" checked value="1"> 成功
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input id="res2" type="radio" name="result" value="0"> 失败
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+    function getUrlParms(name){
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)
+            return unescape(r[2]);
+        return null;
+    }
+
+    $(function() {
+        var idcard = getUrlParms("idcard") || ''
+        var type = getUrlParms("type") || -1
+        var method = getUrlParms("method") || -1
+
+        $('#idcard').val(idcard)
+        $('#type').val(type)
+        $('#cr').val(method)
+    })
+
+    function selectRecord(id,uid,method,result) {
+        $('#update_id').val(id)
+        $('#u_uid').val(uid)
+
+        if (record.method == 1) {
+            $('#method2').val(method)
+        }else {
+            $('#method1').val(method)
+        }
+
+        if (record.result == 1) {
+            $('#res1').val(result)
+        }else {
+            $('#res2').val(result)
+        }
+    }
+
+</script>
 </body>
 </html>
